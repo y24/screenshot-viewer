@@ -20,21 +20,31 @@ app.whenReady().then(() => {
   });
 });
 
+// 再帰的にフォルダ内の画像を取得する関数
+function getImageFiles(folderPath, recursive = false) {
+  let imageFiles = [];
+
+  function scanDirectory(directory) {
+    fs.readdirSync(directory, { withFileTypes: true }).forEach(entry => {
+      const fullPath = path.join(directory, entry.name);
+      if (entry.isDirectory() && recursive) {
+        scanDirectory(fullPath);
+      } else if (entry.isFile() && /\.(png|jpe?g)$/i.test(entry.name)) {
+        imageFiles.push(fullPath);
+      }
+    });
+  }
+
+  scanDirectory(folderPath);
+  return imageFiles;
+}
+
 // フォルダ選択ダイアログ（複数フォルダ選択対応）
 ipcMain.handle("select-folders", async () => {
   const result = await dialog.showOpenDialog(mainWindow, {
     properties: ["openDirectory", "multiSelections"], // 複数選択可
   });
   return result.filePaths || [];
-});
-
-// 指定フォルダ内の画像ファイルを取得
-ipcMain.handle("get-image-files", async (_, folderPath) => {
-  if (!folderPath || !fs.existsSync(folderPath)) return [];
-  return fs
-    .readdirSync(folderPath)
-    .filter(file => /\.(png|jpe?g)$/i.test(file))
-    .map(file => path.join(folderPath, file));
 });
 
 // 未一致のファイルをダイアログで表示
@@ -72,4 +82,10 @@ ipcMain.on("show-same-folder-error", (_, folderPath) => {
     message: `選択したフォルダ「${folderPath}」は同じです。異なるフォルダを選択してください。`,
     buttons: ["OK"]
   });
+});
+
+// 画像ファイル取得（再帰モード対応）
+ipcMain.handle("get-image-files", async (_, folderPath, recursive) => {
+  if (!folderPath || !fs.existsSync(folderPath)) return [];
+  return getImageFiles(folderPath, recursive);
 });

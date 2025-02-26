@@ -141,8 +141,9 @@ span#imageCounter {
     font-size: 44px;
 }
 
-#initialContainer div.match-mode {
-    margin: 10px;
+#initialContainer div.mode-select {
+    margin: 20px;
+    text-align: left;
 }
 
 /* フルスクリーン表示用 */

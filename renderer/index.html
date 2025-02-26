@@ -12,10 +12,17 @@
   <div id="initialContainer">
     <p id="title">A/B Image Viewer</p>
     <button id="selectFolder">フォルダを選択して開始 (複数可)</button>
-    <div class="match-mode">
-      照合方法:
-      <label><input type="radio" name="matchMode" value="prefix" checked> プレフィックス一致</label>
-      <label><input type="radio" name="matchMode" value="exact"> 完全一致</label>
+    <div class="mode-select">
+      <div>
+        照合方法:
+        <label><input type="radio" name="matchMode" value="prefix" checked> プレフィックス一致</label>
+        <label><input type="radio" name="matchMode" value="exact"> 完全一致</label>
+      </div>
+      <div>
+        サブディレクトリ:
+        <label><input type="radio" name="searchMode" value="normal" checked> 含まない</label>
+        <label><input type="radio" name="searchMode" value="recursive"> 含む</label>
+      </div>
     </div>
   </div>
 

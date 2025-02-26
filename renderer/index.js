@@ -1,6 +1,7 @@
 const initialContainer = document.getElementById("initialContainer");
 const folderBtn = document.getElementById("selectFolder");
 const matchModeRadios = document.querySelectorAll("input[name='matchMode']");
+const searchModeRadios = document.querySelectorAll("input[name='searchMode']");
 
 const mainUiContainer = document.getElementById("mainUiContainer");
 const folder1Btn = document.getElementById("selectFolder1");
@@ -26,14 +27,20 @@ let currentPrefix = "";
 let zoomLevel = 1;
 let moveX = 0, moveY = 0;
 let matchMode = "prefix"; // 初期値はプレフィックス一致
+let searchMode = "normal"; // 初期値は通常モード
 
-// ラジオボタンの変更時にマッチングを更新
+// ラジオボタンの変更時に設定を更新
 matchModeRadios.forEach(radio => {
     radio.addEventListener("change", (event) => {
-      matchMode = event.target.value;
-      if (Object.keys(folder1Files).length > 0 && Object.keys(folder2Files).length > 0) {
-        matchFiles();
-      }
+        matchMode = event.target.value;
+        if (Object.keys(folder1Files).length > 0 && Object.keys(folder2Files).length > 0) {
+            matchFiles();
+        }
+    });
+});
+searchModeRadios.forEach(radio => {
+    radio.addEventListener("change", (event) => {
+        searchMode = event.target.value;
     });
 });
 
@@ -82,7 +89,8 @@ async function assignFolder(type, folderPath) {
         return;
     }
 
-    const files = await window.electronAPI.getImageFiles(folderPath);
+    const recursive = searchMode === "recursive";  // 再帰モードかどうか
+    const files = await window.electronAPI.getImageFiles(folderPath, recursive);
     const fileMap = {};
 
     files.forEach(filePath => {
