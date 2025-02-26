@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A/B Image Viewer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="initialContainer">
+    <p id="title">A/B Image Viewer</p>
+    <button id="selectFolder">フォルダを選択して開始 (複数可)</button>
+  </div>
+
+  <div id="mainUiContainer" class="hidden">
+    <div class="menu-bar">
+      <div id="selector">
+        <select id="fileDropdown"></select>
+      </div>
+      <span id="imageCounter">0/0</span>
+      <span id="clearSelection" class="clear-icon">🗑</span>
+    </div>
+    <div class="controls">
+      <div class="control">
+        <span id="folder1Name" class="folder-name"></span>
+        <button id="selectFolder1" class="btn-small">...</button>
+      </div>
+      <div class="control">
+        <span id="folder2Name" class="folder-name"></span>
+        <button id="selectFolder2" class="btn-small">...</button>
+      </div>
+
+    </div>
+    <div class="viewer">
+      <div id="imageContainer1" class="image-column"></div>
+      <div id="imageContainer2" class="image-column"></div>
+    </div>
+  </div>
+
+  <!-- 拡大表示用のフルスクリーンコンテナ -->
+  <div id="fullscreenContainer" class="hidden">
+    <button id="closeFullscreen">×</button>
+    <img id="fullscreenImage" src="" alt="拡大画像">
+  </div>
+
+  <script src="index.js"></script>
+</body>
+
+</html>

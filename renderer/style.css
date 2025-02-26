@@ -1,0 +1,186 @@
+html {
+    overflow-y: scroll;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #181818;
+    color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    background-color: #333;
+    color: #f0f0f0;
+    border: 1px solid #555;
+    padding: 8px 15px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+button.btn-small {
+    margin: 2px;
+    padding: 4px 8px;
+}
+
+button:hover {
+    background-color: #444;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 65px 0px 00px;
+}
+
+.control {
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}
+
+.folder-name {
+    font-weight: bold;
+    color: #bbb;
+    border: 1px solid #282828;
+    background-color: #282828;
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+
+/* メニューバー */
+.menu-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(22, 22, 22, 0.9);
+    border-bottom: 1px solid #444;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+div#selector {
+    margin: 0 0 0 5px;
+}
+
+span#imageCounter {
+    font-size: 24px;
+}
+
+/* クリアアイコン（ゴミ箱アイコン） */
+.clear-icon {
+    font-size: 26px;
+    cursor: pointer;
+    color: #bbb;
+    transition: color 0.3s;
+    margin: 0 25px 0;
+}
+
+.clear-icon:hover {
+    color: #f0f0f0;
+}
+
+/* 画像表示部分 */
+.viewer {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    gap: 5px;
+    padding: 5px 0px;
+}
+
+.image-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* 2枚の画像を並べて表示 */
+    width: 50%;
+    height: 100%;
+    overflow-y: auto;
+    padding: 4px;
+}
+
+.image-column img {
+    width: 99%;
+    /* アスペクト比を維持 */
+    height: auto;
+    /* 縦のスクロールを許容 */
+    max-height: 100%;
+    /* 画像の比率を維持しつつフィット */
+    object-fit: contain;
+    margin-bottom: 10px;
+    /* クリック可能 */
+    cursor: pointer;
+    border: 1px solid #666;
+    border-radius: 3px;
+}
+
+#initialContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#initialContainer button {
+    width: 25em;
+    height: 3em;
+}
+
+#initialContainer #title {
+    font-size: 44px;
+}
+
+/* フルスクリーン表示用 */
+#fullscreenContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#fullscreenContainer.hidden,
+#mainUiContainer.hidden,
+#initialContainer.hidden {
+    display: none;
+}
+
+#fullscreenImage {
+    max-width: 100%;
+    max-height: 100%;
+    cursor: grab;
+    transition: transform 0.1s ease-in-out;
+}
+
+#closeFullscreen {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    font-size: 40px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    z-index: 1100;
+}
+
+#closeFullscreen:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
