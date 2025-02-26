@@ -27,6 +27,7 @@ let startX, startY, moveX = 0, moveY = 0;
 // フォルダ選択
 async function selectFolders(targetFolder) {
     const folderPaths = await window.electronAPI.selectFolders();
+    // キャンセル時
     if (!folderPaths.length) return;
 
     // フォルダ割当
@@ -53,11 +54,19 @@ async function assignFolder(type, folderPath) {
 
         // フォルダ2をまだ選択していない場合
         if (Object.keys(folder2Files).length === 0) {
-            folder2Name.textContent = "b: 未選択"
+            folder2Name.textContent = "b: 選択してください"
+            fileDropdown.classList.add("hidden");
         }
     } else {
         folder2Path = folderPath;
         folder2Name.textContent = `b: ${folderName}`;
+        fileDropdown.classList.remove("hidden");
+    }
+
+    // フォルダ1とフォルダ2が同じパスだった場合、エラーダイアログを表示
+    if (folder1Path === folder2Path) {
+        window.electronAPI.showSameFolderError(folderPath);
+        return;
     }
 
     const files = await window.electronAPI.getImageFiles(folderPath);
@@ -235,7 +244,7 @@ function clearSelection() {
     fileDropdown.innerHTML = "";
     imageContainer1.innerHTML = "";
     imageContainer2.innerHTML = "";
-    imageCounter.textContent = "0/0";
+    imageCounter.textContent = "-/-";
 
     // 初期UIに切り替え
     initialContainer.classList.remove("hidden");

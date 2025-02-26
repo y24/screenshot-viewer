@@ -155,6 +155,7 @@ span#imageCounter {
     z-index: 1000;
 }
 
+#fileDropdown.hidden,
 #fullscreenContainer.hidden,
 #mainUiContainer.hidden,
 #initialContainer.hidden {

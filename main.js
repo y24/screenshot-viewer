@@ -63,3 +63,13 @@ ipcMain.on("show-unmatched-files", (_, unmatchedFiles) => {
     });
   }
 });
+
+// フォルダが同じ場合にエラーダイアログを表示
+ipcMain.on("show-same-folder-error", (_, folderPath) => {
+  dialog.showMessageBox(mainWindow, {
+    type: "error",
+    title: "フォルダ選択エラー",
+    message: `選択したフォルダ「${folderPath}」は同じです。異なるフォルダを選択してください。`,
+    buttons: ["OK"]
+  });
+});
