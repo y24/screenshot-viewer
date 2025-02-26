@@ -36,3 +36,30 @@ ipcMain.handle("get-image-files", async (_, folderPath) => {
     .filter(file => /\.(png|jpe?g)$/i.test(file))
     .map(file => path.join(folderPath, file));
 });
+
+// 未一致のファイルをダイアログで表示
+ipcMain.on("show-unmatched-files", (_, unmatchedFiles) => {
+  let message = "一致しなかったファイルがあります。\n\n";
+  let hasUnmatched = false;
+
+  for (const [folder, files] of Object.entries(unmatchedFiles)) {
+    if (files.length > 0) {
+      hasUnmatched = true;
+      const folderName = folder.split(/[/\\]/).pop();
+      message += `[${folderName}]\n`;
+      files.forEach(file => {
+        message += `  ${file}\n`;
+      });
+      message += "\n";
+    }
+  }
+
+  if (hasUnmatched) {
+    dialog.showMessageBox(mainWindow, {
+      type: "warning",
+      title: "ファイル不一致",
+      message: message.trim(),
+      buttons: ["OK"]
+    });
+  }
+});

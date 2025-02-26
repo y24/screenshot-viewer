@@ -86,6 +86,7 @@ async function assignFolder(type, folderPath) {
 // ファイル名のプレフィックスでマッチング
 function matchFiles() {
     matchedGroups = {};
+    let unmatchedFiles = { [folder1Path]: [], [folder2Path]: [] };
 
     Object.keys(folder1Files).forEach(prefix => {
         if (folder2Files[prefix]) {
@@ -93,12 +94,25 @@ function matchFiles() {
                 folder1: folder1Files[prefix],
                 folder2: folder2Files[prefix]
             };
+        } else {
+            unmatchedFiles[folder1Path].push(...folder1Files[prefix].map(file => file.split(/[/\\]/).pop()));
+        }
+    });
+
+    Object.keys(folder2Files).forEach(prefix => {
+        if (!folder1Files[prefix]) {
+            unmatchedFiles[folder2Path].push(...folder2Files[prefix].map(file => file.split(/[/\\]/).pop()));
         }
     });
 
     if (Object.keys(matchedGroups).length === 0) {
-        alert("一致するファイルがありません");
+        alert("一致するファイルが1つもありません");
         return;
+    }
+
+    // 一部のファイルが一致しない場合はメッセージ表示
+    if (Object.values(unmatchedFiles).some(files => files.length > 0)) {
+        window.electronAPI.showUnmatchedFiles(unmatchedFiles);
     }
 
     updateDropdown();
