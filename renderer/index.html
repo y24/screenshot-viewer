@@ -12,6 +12,11 @@
   <div id="initialContainer">
     <p id="title">A/B Image Viewer</p>
     <button id="selectFolder">フォルダを選択して開始 (複数可)</button>
+    <div class="match-mode">
+      照合方法:
+      <label><input type="radio" name="matchMode" value="prefix" checked> プレフィックス一致</label>
+      <label><input type="radio" name="matchMode" value="exact"> 完全一致</label>
+    </div>
   </div>
 
   <div id="mainUiContainer" class="hidden">

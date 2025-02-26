@@ -1,4 +1,8 @@
+const initialContainer = document.getElementById("initialContainer");
 const folderBtn = document.getElementById("selectFolder");
+const matchModeRadios = document.querySelectorAll("input[name='matchMode']");
+
+const mainUiContainer = document.getElementById("mainUiContainer");
 const folder1Btn = document.getElementById("selectFolder1");
 const folder2Btn = document.getElementById("selectFolder2");
 const clearBtn = document.getElementById("clearSelection");
@@ -8,11 +12,10 @@ const fileDropdown = document.getElementById("fileDropdown");
 const imageCounter = document.getElementById("imageCounter");
 const imageContainer1 = document.getElementById("imageContainer1");
 const imageContainer2 = document.getElementById("imageContainer2");
+
 const fullscreenContainer = document.getElementById("fullscreenContainer");
 const fullscreenImage = document.getElementById("fullscreenImage");
 const closeFullscreen = document.getElementById("closeFullscreen");
-const initialContainer = document.getElementById("initialContainer");
-const mainUiContainer = document.getElementById("mainUiContainer");
 
 let folder1Files = {};
 let folder2Files = {};
@@ -21,8 +24,18 @@ let folder2Path = "";
 let matchedGroups = {};
 let currentPrefix = "";
 let zoomLevel = 1;
-let isDragging = false;
-let startX, startY, moveX = 0, moveY = 0;
+let moveX = 0, moveY = 0;
+let matchMode = "prefix"; // 初期値はプレフィックス一致
+
+// ラジオボタンの変更時にマッチングを更新
+matchModeRadios.forEach(radio => {
+    radio.addEventListener("change", (event) => {
+      matchMode = event.target.value;
+      if (Object.keys(folder1Files).length > 0 && Object.keys(folder2Files).length > 0) {
+        matchFiles();
+      }
+    });
+});
 
 // フォルダ選択
 async function selectFolders(targetFolder) {
@@ -73,12 +86,15 @@ async function assignFolder(type, folderPath) {
     const fileMap = {};
 
     files.forEach(filePath => {
+        // ファイル名取得
         const fileName = filePath.split(/[/\\]/).pop();
-        const prefix = fileName.split("_")[0];
-        if (!fileMap[prefix]) {
-            fileMap[prefix] = [];
+        // モードに応じてキーを設定
+        const key = matchMode === "prefix" ? fileName.split("_")[0] : fileName;
+
+        if (!fileMap[key]) {
+            fileMap[key] = [];
         }
-        fileMap[prefix].push(filePath);
+        fileMap[key].push(filePath);
     });
 
     if (type === "folder1") {

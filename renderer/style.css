@@ -141,6 +141,10 @@ span#imageCounter {
     font-size: 44px;
 }
 
+#initialContainer div.match-mode {
+    margin: 10px;
+}
+
 /* フルスクリーン表示用 */
 #fullscreenContainer {
     position: fixed;
