@@ -1,5 +1,6 @@
 const initialContainer = document.getElementById("initialContainer");
 const folderBtn = document.getElementById("selectFolder");
+const loadSettingLink = document.getElementById("loadSettings");
 const matchModeRadios = document.querySelectorAll("input[name='matchMode']");
 const searchModeRadios = document.querySelectorAll("input[name='searchMode']");
 
@@ -28,6 +29,28 @@ let zoomLevel = 1;
 let moveX = 0, moveY = 0;
 let matchMode = "prefix"; // 初期値はプレフィックス一致
 let searchMode = "normal"; // 初期値は通常モード
+
+// 設定をロードして復元
+async function loadSettings() {
+    const settings = await window.electronAPI.loadSettings();
+    console.log(settings);
+    
+
+    matchMode = settings.matchMode || "prefix";
+    searchMode = settings.searchMode || "normal";
+    currentPrefix = settings.currentPrefix || "";
+
+    // フォルダ1,2の選択
+    if (settings.folder1) assignFolder("folder1", settings.folder1);
+    if (settings.folder2) assignFolder("folder2", settings.folder2);
+
+    // ラジオボタン設定
+    document.querySelector(`input[name="matchMode"][value="${matchMode}"]`).checked = true;
+    document.querySelector(`input[name="searchMode"][value="${searchMode}"]`).checked = true;
+
+    // メインUIに切り替え
+    switchToMainUi();
+}
 
 // ラジオボタンの変更時に設定を更新
 matchModeRadios.forEach(radio => {
@@ -60,7 +83,11 @@ async function selectFolders(targetFolder) {
         alert("最大2つのフォルダを選択してください。");
     }
 
-    // メインUIに切り替え
+    switchToMainUi();
+}
+
+// メインUIに切り替え
+function switchToMainUi() {
     initialContainer.classList.add("hidden");
     mainUiContainer.classList.remove("hidden");
 }
@@ -110,6 +137,8 @@ async function assignFolder(type, folderPath) {
     } else {
         folder2Files = fileMap;
     }
+
+    window.electronAPI.updateSetting(type, folderPath);
 
     if (Object.keys(folder1Files).length > 0 && Object.keys(folder2Files).length > 0) {
         matchFiles();
@@ -294,3 +323,13 @@ folderBtn.addEventListener("click", () => selectFolders("folder1"));
 folder1Btn.addEventListener("click", () => selectFolders("folder1"));
 folder2Btn.addEventListener("click", () => selectFolders("folder2"));
 clearBtn.addEventListener("click", clearSelection);
+matchModeRadios.forEach(radio => radio.addEventListener("change", event => {
+    matchMode = event.target.value;
+    window.electronAPI.updateSetting("matchMode", matchMode);
+    matchFiles();
+  }));
+  searchModeRadios.forEach(radio => radio.addEventListener("change", event => {
+    searchMode = event.target.value;
+    window.electronAPI.updateSetting("searchMode", searchMode);
+  }));
+loadSettingLink.addEventListener("click", () => loadSettings());

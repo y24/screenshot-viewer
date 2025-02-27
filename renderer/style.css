@@ -141,6 +141,12 @@ span#imageCounter {
     font-size: 44px;
 }
 
+#initialContainer #loadSettings {
+    color:#888;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 #initialContainer div.mode-select {
     margin: 20px;
     text-align: left;
@@ -158,6 +164,7 @@ span#imageCounter {
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    cursor: pointer;
 }
 
 #fileDropdown.hidden,
@@ -170,7 +177,7 @@ span#imageCounter {
 #fullscreenImage {
     max-width: 100%;
     max-height: 100%;
-    cursor: grab;
+    cursor: pointer;
     transition: transform 0.1s ease-in-out;
 }
 

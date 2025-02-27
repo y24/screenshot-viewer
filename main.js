@@ -2,12 +2,56 @@ const { app, BrowserWindow, dialog, ipcMain } = require("electron");
 const path = require("path");
 const fs = require("fs");
 
-let mainWindow;
+const SETTINGS_FILE = path.join(app.getPath("userData"), "settings.json");
 
+let mainWindow;
+let appSettings = {
+  windowSize: { width: 1000, height: 700 },
+  folder1: "",
+  folder2: "",
+  currentPrefix: "",
+  matchMode: "prefix",
+  searchMode: "normal"
+};
+
+// 設定を読み込む関数
+function loadSettings() {
+  if (fs.existsSync(SETTINGS_FILE)) {
+    try {
+      const data = JSON.parse(fs.readFileSync(SETTINGS_FILE, "utf-8"));
+
+      if (data.windowSize) appSettings.windowSize = data.windowSize;
+      if (data.folder1) appSettings.folder1 = fs.existsSync(data.folder1) ? data.folder1 : "";
+      if (data.folder2) appSettings.folder2 = fs.existsSync(data.folder2) ? data.folder2 : "";
+      if (data.currentPrefix) appSettings.currentPrefix = data.currentPrefix;
+      if (data.matchMode) appSettings.matchMode = data.matchMode;
+      if (data.searchMode) appSettings.searchMode = data.searchMode;
+
+      if (!fs.existsSync(data.folder1) || !fs.existsSync(data.folder2)) {
+        dialog.showMessageBoxSync({
+          type: "warning",
+          title: "フォルダが見つかりません",
+          message: "前回のフォルダが見つかりません。フォルダを再選択してください。"
+        });
+      }
+    } catch (error) {
+      console.error("設定の読み込みに失敗しました:", error);
+    }
+  }
+}
+
+// 設定を保存する関数
+function saveSettings() {
+  fs.writeFileSync(SETTINGS_FILE, JSON.stringify(appSettings, null, 2), "utf-8");
+}
+
+// メインウィンドウ作成
 app.whenReady().then(() => {
+  loadSettings();
+
   mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 700,
+    width: appSettings.windowSize.width,
+    height: appSettings.windowSize.height,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
@@ -15,10 +59,19 @@ app.whenReady().then(() => {
 
   mainWindow.loadFile("renderer/index.html");
 
+  // ウィンドウサイズ変更時に保存
+  mainWindow.on("resize", () => {
+    const bounds = mainWindow.getBounds();
+    appSettings.windowSize = { width: bounds.width, height: bounds.height };
+  });
+
   mainWindow.on("closed", () => {
     mainWindow = null;
   });
 });
+
+// アプリ終了時に設定を保存
+app.on("before-quit", saveSettings);
 
 // 再帰的にフォルダ内の画像を取得する関数
 function getImageFiles(folderPath, recursive = false) {
@@ -88,4 +141,12 @@ ipcMain.on("show-same-folder-error", (_, folderPath) => {
 ipcMain.handle("get-image-files", async (_, folderPath, recursive) => {
   if (!folderPath || !fs.existsSync(folderPath)) return [];
   return getImageFiles(folderPath, recursive);
+});
+
+// 設定をフロントエンドに送信
+ipcMain.handle("load-settings", () => appSettings);
+
+// 設定を更新
+ipcMain.handle("update-setting", (_, key, value) => {
+  appSettings[key] = value;
 });
