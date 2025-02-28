@@ -19,6 +19,10 @@ const fullscreenContainer = document.getElementById("fullscreenContainer");
 const fullscreenImage = document.getElementById("fullscreenImage");
 const closeFullscreen = document.getElementById("closeFullscreen");
 
+const settingsIcon = document.getElementById("settingsIcon");
+const settingsModal = document.getElementById("settingsModal");
+const closeModal = document.querySelector(".modal-close");
+
 let folder1Files = {};
 let folder2Files = {};
 let folder1Path = "";
@@ -33,39 +37,22 @@ let searchMode = "normal"; // 初期値は通常モード
 // 設定をロードして復元
 async function loadSettings() {
     const settings = await window.electronAPI.loadSettings();
-    console.log(settings);
-    
 
     matchMode = settings.matchMode || "prefix";
     searchMode = settings.searchMode || "normal";
     currentPrefix = settings.currentPrefix || "";
 
-    // フォルダ1,2の選択
-    if (settings.folder1) assignFolder("folder1", settings.folder1);
-    if (settings.folder2) assignFolder("folder2", settings.folder2);
-
     // ラジオボタン設定
     document.querySelector(`input[name="matchMode"][value="${matchMode}"]`).checked = true;
     document.querySelector(`input[name="searchMode"][value="${searchMode}"]`).checked = true;
 
+    // フォルダ1,2の選択
+    if (settings.folder1) assignFolder("folder1", settings.folder1);
+    if (settings.folder2) assignFolder("folder2", settings.folder2);
+
     // メインUIに切り替え
     switchToMainUi();
 }
-
-// ラジオボタンの変更時に設定を更新
-matchModeRadios.forEach(radio => {
-    radio.addEventListener("change", (event) => {
-        matchMode = event.target.value;
-        if (Object.keys(folder1Files).length > 0 && Object.keys(folder2Files).length > 0) {
-            matchFiles();
-        }
-    });
-});
-searchModeRadios.forEach(radio => {
-    radio.addEventListener("change", (event) => {
-        searchMode = event.target.value;
-    });
-});
 
 // フォルダ選択
 async function selectFolders(targetFolder) {
@@ -318,18 +305,47 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
+// 設定アイコンをクリックでモーダル表示
+settingsIcon.addEventListener("click", () => {
+    // モーダル表示
+    settingsModal.classList.remove("hidden");
+    // ラジオボタン設定
+    document.querySelector(`input[name="matchMode"][value="${matchMode}"]`).checked = true;
+    document.querySelector(`input[name="searchMode"][value="${searchMode}"]`).checked = true;
+});
+
+// モーダル外をクリックで閉じる
+settingsModal.addEventListener("click", (event) => {
+    if (event.target === settingsModal) {
+        settingsModal.classList.add("hidden");
+    }
+});
+
+// モーダル閉じるボタン
+closeModal.addEventListener("click", () => {
+    settingsModal.classList.add("hidden");
+});
+
 // イベントリスナー
 folderBtn.addEventListener("click", () => selectFolders("folder1"));
 folder1Btn.addEventListener("click", () => selectFolders("folder1"));
 folder2Btn.addEventListener("click", () => selectFolders("folder2"));
 clearBtn.addEventListener("click", clearSelection);
-matchModeRadios.forEach(radio => radio.addEventListener("change", event => {
-    matchMode = event.target.value;
-    window.electronAPI.updateSetting("matchMode", matchMode);
-    matchFiles();
-  }));
-  searchModeRadios.forEach(radio => radio.addEventListener("change", event => {
-    searchMode = event.target.value;
-    window.electronAPI.updateSetting("searchMode", searchMode);
-  }));
 loadSettingLink.addEventListener("click", () => loadSettings());
+
+// ラジオボタン変更時に設定を更新
+matchModeRadios.forEach(radio => {
+    radio.addEventListener("change", (event) => {
+        matchMode = event.target.value;
+        window.electronAPI.updateSetting("matchMode", matchMode);
+        // if (Object.keys(folder1Files).length > 0 && Object.keys(folder2Files).length > 0) {
+        //     matchFiles();
+        // }
+    });
+});
+searchModeRadios.forEach(radio => {
+    radio.addEventListener("change", (event) => {
+        searchMode = event.target.value;
+        window.electronAPI.updateSetting("searchMode", searchMode);
+    });
+});
