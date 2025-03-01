@@ -18,6 +18,7 @@ const fullscreenContainer = document.getElementById("fullscreenContainer");
 const fullscreenImage = document.getElementById("fullscreenImage");
 const closeFullscreen = document.getElementById("closeFullscreen");
 
+const reloadBtn = document.getElementById("reloadBtn");
 const settingsIcon = document.getElementById("settingsIcon");
 const settingsModal = document.getElementById("settingsModal");
 const closeModal = document.querySelector(".modal-close");
@@ -316,12 +317,23 @@ closeModal.addEventListener("click", () => {
     settingsModal.classList.add("hidden");
 });
 
+// 再読み込みボタン
+async function reloadAll() {
+    folder1Files = {};
+    folder2Files = {};
+    matchedGroups = {};
+    currentPrefix = "";
+  
+    await loadSettings();  // 設定を再ロード
+  }
+
 // イベントリスナー
+loadSettingLink.addEventListener("click", () => loadSettings());
 folderBtn.addEventListener("click", () => selectFolders("folder1"));
 folder1Btn.addEventListener("click", () => selectFolders("folder1"));
 folder2Btn.addEventListener("click", () => selectFolders("folder2"));
 clearBtn.addEventListener("click", clearSelection);
-loadSettingLink.addEventListener("click", () => loadSettings());
+reloadBtn.addEventListener("click", reloadAll);
 
 // ラジオボタン変更時に設定を更新
 matchModeRadios.forEach(radio => {

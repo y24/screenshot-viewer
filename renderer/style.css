@@ -137,15 +137,37 @@ span#imageCounter {
     font-size: 24px;
 }
 
-.menu-icon {
-    font-size: 26px;
+.text-icon {
+    font-size: 28px;
     cursor: pointer;
     color: #bbb;
     transition: color 0.3s;
     margin: 0 10px 0;
 }
 
-.menu-icon.right-end {
+/* SVGアイコンの共通スタイル */
+.icon {
+    /* width: 26px;
+    height: 26px; */
+    fill: #bbb;
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+/* ホバー時のアニメーション */
+.icon:hover {
+    transform: scale(1.1);
+}
+
+/* アイコンのコンテナ */
+.icon-container {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+
+.right-end {
     margin: 0 25px 0 10px;
 }
 

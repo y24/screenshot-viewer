@@ -22,13 +22,21 @@
     <!-- メニューバー -->
     <div class="menu-bar">
       <div>
-        <span id="clearSelection" class="menu-icon">⬅</span>
+        <!-- ホームボタン -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="clearSelection" class="icon" width="28" height="28">
+          <path d="M12 3l10 9h-3v9h-6v-6h-2v6H5v-9H2z"/>
+        </svg>
       </div>
       <div>
         <select id="fileDropdown"></select>
       </div>
       <div>
-        <span id="settingsIcon" class="menu-icon right-end">⚙</span>
+        <!-- 再読み込みボタン -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="reloadBtn" class="icon" width="22" height="22">
+          <path d="M12 4V1l-4 4 4 4V6a8 8 0 1 1-8 8H2a10 10 0 1 0 10-10z"/>
+        </svg>
+        <!-- 設定ボタン -->
+        <span id="settingsIcon" class="text-icon right-end">⚙</span>
       </div>
     </div>
     <!-- ビューア -->
