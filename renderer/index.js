@@ -5,12 +5,17 @@ const matchModeRadios = document.querySelectorAll("input[name='matchMode']");
 const searchModeRadios = document.querySelectorAll("input[name='searchMode']");
 
 const mainUiContainer = document.getElementById("mainUiContainer");
+const clearBtn = document.getElementById("clearSelection");
+const fileDropdown = document.getElementById("fileDropdown");
+const nextBtn = document.getElementById("moveToNext");
+const prevBtn = document.getElementById("moveToPrev");
+const firstBtn = document.getElementById("moveToFirst");
+const lastBtn = document.getElementById("moveToLast");
+
 const folder1Btn = document.getElementById("selectFolder1");
 const folder2Btn = document.getElementById("selectFolder2");
-const clearBtn = document.getElementById("clearSelection");
 const folder1Name = document.getElementById("folder1Name");
 const folder2Name = document.getElementById("folder2Name");
-const fileDropdown = document.getElementById("fileDropdown");
 const imageContainer1 = document.getElementById("imageContainer1");
 const imageContainer2 = document.getElementById("imageContainer2");
 
@@ -283,17 +288,46 @@ function clearSelection() {
     mainUiContainer.classList.add("hidden");
 }
 
+// 次の画像へ移動
+function moveToNext() {
+    const keys = Object.keys(matchedGroups);
+    let currentIndex = keys.indexOf(currentPrefix);
+    if (currentIndex < keys.length - 1) {
+        currentPrefix = keys[currentIndex + 1];
+        showImages();
+    }
+}
+// 前の画像へ移動
+function moveToPrev() {
+    const keys = Object.keys(matchedGroups);
+    let currentIndex = keys.indexOf(currentPrefix);
+    if (currentIndex > 0) {
+        currentPrefix = keys[currentIndex - 1];
+        showImages();
+    }
+}
+// 最初の画像へ移動
+function moveToFirst() {
+    const keys = Object.keys(matchedGroups);
+    if (keys.length === 0) return;
+    currentPrefix = keys[0];
+    showImages();
+}
+
+// 最後の画像へ移動
+function moveToLast() {
+    const keys = Object.keys(matchedGroups);
+    if (keys.length === 0) return;
+    currentPrefix = keys[keys.length - 1];
+    showImages();
+}
+
 // キーボード操作で画像切り替え
 document.addEventListener("keydown", (event) => {
-    const prefixes = Object.keys(matchedGroups);
-    let currentIndex = prefixes.indexOf(currentPrefix);
-
-    if (event.key === "ArrowRight" && currentIndex < prefixes.length - 1) {
-        currentPrefix = prefixes[currentIndex + 1];
-        showImages();
-    } else if (event.key === "ArrowLeft" && currentIndex > 0) {
-        currentPrefix = prefixes[currentIndex - 1];
-        showImages();
+    if (event.key === "ArrowRight") {
+        moveToNext();
+    } else if (event.key === "ArrowLeft") {
+        moveToPrev();
     }
 });
 
@@ -324,19 +358,27 @@ async function reloadAll() {
     folder2Files = {};
     matchedGroups = {};
     currentPrefix = "";
-  
-    await loadSettings();  // 設定を再ロード
-  }
 
-// イベントリスナー
+    await loadSettings();  // 設定を再ロード
+}
+
+// クリックイベント: 初期画面
 loadSettingLink.addEventListener("click", () => loadSettings());
 folderBtn.addEventListener("click", () => selectFolders("folder1"));
-folder1Btn.addEventListener("click", () => selectFolders("folder1"));
-folder2Btn.addEventListener("click", () => selectFolders("folder2"));
+
+// クリックイベント: メニューバー
 clearBtn.addEventListener("click", clearSelection);
 reloadBtn.addEventListener("click", reloadAll);
+nextBtn.addEventListener("click", moveToNext);
+prevBtn.addEventListener("click", moveToPrev);
+firstBtn.addEventListener("click", moveToFirst);
+lastBtn.addEventListener("click", moveToLast);
 
-// ラジオボタン変更時に設定を更新
+// クリックイベント: ビューア
+folder1Btn.addEventListener("click", () => selectFolders("folder1"));
+folder2Btn.addEventListener("click", () => selectFolders("folder2"));
+
+// 設定画面: ラジオボタン変更時に設定を更新
 matchModeRadios.forEach(radio => {
     radio.addEventListener("change", (event) => {
         matchMode = event.target.value;
