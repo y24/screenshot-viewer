@@ -108,16 +108,20 @@ function showControls(){
 async function assignFolder(type, folderPath) {
     const folderName = folderPath.split(/[/\\]/).pop();
     if (type === "folder1") {
+        // フォルダ1選択時
         folder1Path = folderPath;
         folder1Name.textContent = folderName;
 
         // フォルダ2をまだ選択していない場合
         if (Object.keys(folder2Files).length === 0) {
-            folder2Name.textContent = "選択してください"
+            folder2Name.textContent = "<選択してください>"
             // 各種UI非表示
             hideControls();
+            // 設定更新
+            window.electronAPI.updateSetting("folder2", "");
         }
     } else {
+        // フォルダ2選択時
         folder2Path = folderPath;
         folder2Name.textContent = folderName;
         showControls();
@@ -152,6 +156,7 @@ async function assignFolder(type, folderPath) {
         folder2Files = fileMap;
     }
 
+    // フォルダ割当時に設定更新
     window.electronAPI.updateSetting(type, folderPath);
 
     if (Object.keys(folder1Files).length > 0 && Object.keys(folder2Files).length > 0) {

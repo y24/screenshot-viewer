@@ -149,4 +149,5 @@ ipcMain.handle("load-settings", () => appSettings);
 // 設定を更新
 ipcMain.handle("update-setting", (_, key, value) => {
   appSettings[key] = value;
+  saveSettings();
 });
