@@ -22,22 +22,32 @@
     <!-- メニューバー -->
     <div class="menu-bar">
       <div>
+        <span id="clearSelection" class="menu-icon">⬅</span>
+      </div>
+      <div>
         <select id="fileDropdown"></select>
       </div>
-      <span id="imageCounter">-/-</span>
       <div>
-        <span id="clearSelection" class="menu-icon">🗑</span>
         <span id="settingsIcon" class="menu-icon right-end">⚙</span>
       </div>
     </div>
+    <!-- ビューア -->
     <div class="controls">
       <div class="control">
-        <span id="folder1Name" class="folder-name"></span>
-        <button id="selectFolder1" class="btn-small">📁</button>
+        <div class="folder-select-container">
+          <button id="selectFolder1" class="btn-small">📁</button>
+        </div>
+        <div class="folder-name-container">
+          <span id="folder1Name" class="folder-name"></span>
+        </div>
       </div>
       <div class="control">
-        <span id="folder2Name" class="folder-name"></span>
-        <button id="selectFolder2" class="btn-small">📁</button>
+        <div class="folder-select-container">
+          <button id="selectFolder2" class="btn-small">📁</button>
+        </div>
+        <div class="folder-name-container">
+          <span id="folder2Name" class="folder-name"></span>
+        </div>
       </div>
 
     </div>

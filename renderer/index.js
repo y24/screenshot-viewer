@@ -11,7 +11,6 @@ const clearBtn = document.getElementById("clearSelection");
 const folder1Name = document.getElementById("folder1Name");
 const folder2Name = document.getElementById("folder2Name");
 const fileDropdown = document.getElementById("fileDropdown");
-const imageCounter = document.getElementById("imageCounter");
 const imageContainer1 = document.getElementById("imageContainer1");
 const imageContainer2 = document.getElementById("imageContainer2");
 
@@ -208,14 +207,6 @@ function showImages() {
 
     fileDropdown.value = currentPrefix;
 
-    updateImageCounter();
-}
-
-// 画像カウンター更新
-function updateImageCounter() {
-    const total = Object.keys(matchedGroups).length;
-    const index = Object.keys(matchedGroups).indexOf(currentPrefix) + 1;
-    imageCounter.textContent = `${index}/${total}`;
 }
 
 // 画像クリックでフルスクリーン表示
@@ -284,7 +275,6 @@ function clearSelection() {
     fileDropdown.innerHTML = "";
     imageContainer1.innerHTML = "";
     imageContainer2.innerHTML = "";
-    imageCounter.textContent = "-/-";
 
     // 初期UIに切り替え
     initialContainer.classList.remove("hidden");

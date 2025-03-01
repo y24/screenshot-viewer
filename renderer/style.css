@@ -31,27 +31,87 @@ button:hover {
     background-color: #444;
 }
 
+/* ダークモードのセレクトボックス */
+select {
+    appearance: none; /* デフォルトのスタイルを無効化 */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #2a2a2a; /* ダークグレーの背景 */
+    color: #ffffff; /* 白色の文字 */
+    border: 1px solid #555; /* ボーダー */
+    padding: 10px 40px 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    /* width: 200px; */
+    position: relative;
+}
+
+/* ホバー時のスタイル */
+select:hover {
+    background-color: #3a3a3a;
+}
+
+/* フォーカス時のスタイル */
+select:focus {
+    border-color: #777;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+/* オプションのスタイル */
+select option {
+    background-color: #2a2a2a;
+    color: #ffffff;
+    padding: 10px;
+}
+
+/* カスタムの矢印を追加する */
+select {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='16' height='16' fill='%23ffffff'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+}
+
+/* カスタムの矢印を適用しないブラウザ対策 */
+select::-ms-expand {
+    display: none;
+}
+
+
 .controls {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
-    padding: 65px 0px 00px;
+    padding: 65px 0px 0px 4px;
 }
 
 .control {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     width: 50%;
 }
 
+.folder-select-container {
+    grid-column: 1;
+    justify-self: left;
+}
+
+.folder-name-container {
+    grid-column: 2;
+}
+
 .folder-name {
+    font-size: 20px;
     font-weight: bold;
     color: #bbb;
-    border: 1px solid #282828;
-    background-color: #282828;
     padding: 5px 15px;
-    border-radius: 5px;
+    /* border: 1px solid #282828; */
+    /* border-radius: 5px; */
+    /* background-color: #282828; */
 }
 
 /* メニューバー */
