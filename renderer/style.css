@@ -90,6 +90,18 @@ select::-ms-expand {
     cursor: pointer;
 }
 
+.icon.fill {
+    fill: #bbb;
+}
+
+.icon.stroke {
+    fill: none;
+    stroke: #bbb;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
 /* ホバー時のアニメーション */
 .icon:hover, .text-icon:hover {
     /* transform: scale(1.1); */
@@ -309,6 +321,6 @@ select::-ms-expand {
 }
 
 .attention {
-    color: red;
+    /* color: red; */
     font-size: 14px;
 }

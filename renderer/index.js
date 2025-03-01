@@ -85,6 +85,25 @@ function switchToMainUi() {
     mainUiContainer.classList.remove("hidden");
 }
 
+// データが揃う前の各種UI非表示
+function hideControls(){
+    fileDropdown.classList.add("hidden");
+    firstBtn.classList.add("hidden");
+    prevBtn.classList.add("hidden");
+    nextBtn.classList.add("hidden");
+    lastBtn.classList.add("hidden");
+    reloadBtn.classList.add("hidden");
+}
+// 各種UI表示
+function showControls(){
+    fileDropdown.classList.remove("hidden");
+    firstBtn.classList.remove("hidden");
+    prevBtn.classList.remove("hidden");
+    nextBtn.classList.remove("hidden");
+    lastBtn.classList.remove("hidden");
+    reloadBtn.classList.remove("hidden");
+}
+
 // フォルダを割り当てる
 async function assignFolder(type, folderPath) {
     const folderName = folderPath.split(/[/\\]/).pop();
@@ -95,16 +114,18 @@ async function assignFolder(type, folderPath) {
         // フォルダ2をまだ選択していない場合
         if (Object.keys(folder2Files).length === 0) {
             folder2Name.textContent = "b: 選択してください"
-            fileDropdown.classList.add("hidden");
+            // 各種UI非表示
+            hideControls();
         }
     } else {
         folder2Path = folderPath;
         folder2Name.textContent = `b: ${folderName}`;
-        fileDropdown.classList.remove("hidden");
+        showControls();
     }
 
     // フォルダ1とフォルダ2が同じパスだった場合、エラーダイアログを表示
     if (folder1Path === folder2Path) {
+        hideControls();
         window.electronAPI.showSameFolderError(folderPath);
         return;
     }

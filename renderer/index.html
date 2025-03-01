@@ -24,7 +24,7 @@
       <!-- 左側 -->
       <div class="menu-content">
         <!-- ホームボタン -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="clearSelection" class="icon" width="28"
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="clearSelection" class="icon fill" width="28"
           height="28">
           <path d="M12 3l10 9h-3v9h-6v-6h-2v6H5v-9H2z" />
         </svg>
@@ -32,28 +32,28 @@
       <!-- 中央 -->
       <div class="menu-content">
         <!-- 最初に戻る -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="moveToFirst" class="icon move" width="28" height="28">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="moveToFirst" class="icon fill" width="28" height="28">
           <path d="M19 5l-7 7 7 7V5zM5 5h2v14H5V5z" />
         </svg>
         <!-- 1つ前に戻る -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="moveToPrev" class="icon move" width="28" height="28">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="moveToPrev" class="icon fill" width="28" height="28">
           <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z" />
         </svg>
         <!-- プルダウンメニュー -->
         <select id="fileDropdown"></select>
         <!-- 1つ先に進む -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="moveToNext" class="icon move" width="28" height="28">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="moveToNext" class="icon fill" width="28" height="28">
           <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z" />
         </svg>
         <!-- 最後に進む -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="moveToLast" class="icon move" width="28" height="28">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="moveToLast" class="icon fill" width="28" height="28">
           <path d="M5 5l7 7-7 7V5zM17 5h2v14h-2V5z" />
         </svg>
       </div>
       <!-- 右側 -->
       <div class="menu-content">
         <!-- 再読み込みボタン -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="reloadBtn" class="icon" width="22" height="22">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="reloadBtn" class="icon fill" width="22" height="22">
           <path d="M12 4V1l-4 4 4 4V6a8 8 0 1 1-8 8H2a10 10 0 1 0 10-10z" />
         </svg>
         <!-- 設定ボタン -->
@@ -64,7 +64,10 @@
     <div class="controls">
       <div class="control">
         <div class="folder-select-container">
-          <button id="selectFolder1" class="btn-small">📁</button>
+          <!-- フォルダ選択1 -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="selectFolder1" class="icon stroke" width="28" height="28">
+            <path d="M3 6a2 2 0 0 1 2-2h6l2 2h6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          </svg>
         </div>
         <div class="folder-name-container">
           <span id="folder1Name" class="folder-name"></span>
@@ -72,7 +75,10 @@
       </div>
       <div class="control">
         <div class="folder-select-container">
-          <button id="selectFolder2" class="btn-small">📁</button>
+          <!-- フォルダ選択2 -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="selectFolder2" class="icon stroke" width="28" height="28">
+            <path d="M3 6a2 2 0 0 1 2-2h6l2 2h6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          </svg>
         </div>
         <div class="folder-name-container">
           <span id="folder2Name" class="folder-name"></span>
