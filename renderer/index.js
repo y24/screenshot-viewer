@@ -109,17 +109,17 @@ async function assignFolder(type, folderPath) {
     const folderName = folderPath.split(/[/\\]/).pop();
     if (type === "folder1") {
         folder1Path = folderPath;
-        folder1Name.textContent = `a: ${folderName}`;
+        folder1Name.textContent = folderName;
 
         // フォルダ2をまだ選択していない場合
         if (Object.keys(folder2Files).length === 0) {
-            folder2Name.textContent = "b: 選択してください"
+            folder2Name.textContent = "選択してください"
             // 各種UI非表示
             hideControls();
         }
     } else {
         folder2Path = folderPath;
-        folder2Name.textContent = `b: ${folderName}`;
+        folder2Name.textContent = folderName;
         showControls();
     }
 
