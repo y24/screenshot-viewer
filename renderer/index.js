@@ -21,6 +21,7 @@ const closeFullscreen = document.getElementById("closeFullscreen");
 const reloadBtn = document.getElementById("reloadBtn");
 const settingsIcon = document.getElementById("settingsIcon");
 const settingsModal = document.getElementById("settingsModal");
+const settingsChaged = document.getElementById("settingsChaged");
 const closeModal = document.querySelector(".modal-close");
 
 let folder1Files = {};
@@ -312,7 +313,7 @@ settingsModal.addEventListener("click", (event) => {
     }
 });
 
-// モーダル閉じるボタン
+// 設定画面閉じるボタン
 closeModal.addEventListener("click", () => {
     settingsModal.classList.add("hidden");
 });
@@ -340,14 +341,15 @@ matchModeRadios.forEach(radio => {
     radio.addEventListener("change", (event) => {
         matchMode = event.target.value;
         window.electronAPI.updateSetting("matchMode", matchMode);
-        // if (Object.keys(folder1Files).length > 0 && Object.keys(folder2Files).length > 0) {
-        //     matchFiles();
-        // }
+        // リロードを促すメッセージを表示
+        settingsChaged.classList.remove("hidden");
     });
 });
 searchModeRadios.forEach(radio => {
     radio.addEventListener("change", (event) => {
         searchMode = event.target.value;
         window.electronAPI.updateSetting("searchMode", searchMode);
+        // リロードを促すメッセージを表示
+        settingsChaged.classList.remove("hidden");
     });
 });

@@ -21,19 +21,40 @@
   <div id="mainUiContainer" class="hidden">
     <!-- メニューバー -->
     <div class="menu-bar">
-      <div>
+      <!-- 左側 -->
+      <div class="menu-content">
         <!-- ホームボタン -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="clearSelection" class="icon" width="28" height="28">
-          <path d="M12 3l10 9h-3v9h-6v-6h-2v6H5v-9H2z"/>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="clearSelection" class="icon" width="28"
+          height="28">
+          <path d="M12 3l10 9h-3v9h-6v-6h-2v6H5v-9H2z" />
         </svg>
       </div>
-      <div>
+      <!-- 中央 -->
+      <div class="menu-content">
+        <!-- 最初に戻る -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon move" width="28" height="28">
+          <path d="M19 5l-7 7 7 7V5zM5 5h2v14H5V5z" />
+        </svg>
+        <!-- 1つ前に戻る -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon move" width="28" height="28">
+          <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z" />
+        </svg>
+        <!-- プルダウンメニュー -->
         <select id="fileDropdown"></select>
+        <!-- 1つ先に進む -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon move" width="28" height="28">
+          <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z" />
+        </svg>
+        <!-- 最後に進む -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon move" width="28" height="28">
+          <path d="M5 5l7 7-7 7V5zM17 5h2v14h-2V5z" />
+        </svg>
       </div>
-      <div>
+      <!-- 右側 -->
+      <div class="menu-content">
         <!-- 再読み込みボタン -->
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="reloadBtn" class="icon" width="22" height="22">
-          <path d="M12 4V1l-4 4 4 4V6a8 8 0 1 1-8 8H2a10 10 0 1 0 10-10z"/>
+          <path d="M12 4V1l-4 4 4 4V6a8 8 0 1 1-8 8H2a10 10 0 1 0 10-10z" />
         </svg>
         <!-- 設定ボタン -->
         <span id="settingsIcon" class="text-icon right-end">⚙</span>
@@ -89,6 +110,7 @@
           <label><input type="radio" name="searchMode" value="recursive"> 含める</label>
         </div>
       </div>
+      <p id="settingsChaged" class="attention hidden">設定を反映するために、再読み込みを行ってください。</p>
     </div>
   </div>
 

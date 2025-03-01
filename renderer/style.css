@@ -11,6 +11,12 @@ body {
     padding: 0;
 }
 
+/* UI非表示時 */
+.hidden {
+    display: none !important;
+}
+
+/* -------------------ボタン共通------------------- */
 button {
     background-color: #333;
     color: #f0f0f0;
@@ -31,14 +37,14 @@ button:hover {
     background-color: #444;
 }
 
-/* ダークモードのセレクトボックス */
+/* -------------------セレクトボックス------------------- */
 select {
-    appearance: none; /* デフォルトのスタイルを無効化 */
+    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background-color: #2a2a2a; /* ダークグレーの背景 */
-    color: #ffffff; /* 白色の文字 */
-    border: 1px solid #555; /* ボーダー */
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border: 1px solid #555;
     padding: 10px 40px 10px 15px;
     font-size: 16px;
     border-radius: 5px;
@@ -48,12 +54,10 @@ select {
     position: relative;
 }
 
-/* ホバー時のスタイル */
 select:hover {
     background-color: #3a3a3a;
 }
 
-/* フォーカス時のスタイル */
 select:focus {
     border-color: #777;
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
@@ -66,7 +70,7 @@ select option {
     padding: 10px;
 }
 
-/* カスタムの矢印を追加する */
+/* カスタムの矢印 */
 select {
     background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='16' height='16' fill='%23ffffff'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
@@ -79,7 +83,27 @@ select::-ms-expand {
     display: none;
 }
 
+/* -------------------SVGアイコン共通------------------- */
+.icon {
+    fill: #bbb;
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+}
 
+/* ホバー時のアニメーション */
+.icon:hover, .text-icon:hover {
+    /* transform: scale(1.1); */
+    color: #f0f0f0;
+}
+
+/* アイコンのコンテナ */
+.icon-container {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/* -------------------A/Bフォルダ名表示部分------------------- */
 .controls {
     display: flex;
     justify-content: center;
@@ -114,7 +138,7 @@ select::-ms-expand {
     /* background-color: #282828; */
 }
 
-/* メニューバー */
+/* -------------------メニューバー------------------- */
 .menu-bar {
     position: fixed;
     top: 0;
@@ -122,19 +146,22 @@ select::-ms-expand {
     width: 100%;
     background-color: rgba(22, 22, 22, 0.9);
     border-bottom: 1px solid #444;
-    padding: 10px;
+    padding: 5px 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 100;
 }
 
-div#selector {
-    margin: 0 0 0 5px;
+.menu-content {
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-span#imageCounter {
-    font-size: 24px;
+#fileDropdown {
+    margin: 0 15px 0 15px;
 }
 
 .text-icon {
@@ -145,37 +172,11 @@ span#imageCounter {
     margin: 0 10px 0;
 }
 
-/* SVGアイコンの共通スタイル */
-.icon {
-    /* width: 26px;
-    height: 26px; */
-    fill: #bbb;
-    transition: transform 0.2s ease-in-out;
-    cursor: pointer;
-}
-
-/* ホバー時のアニメーション */
-.icon:hover {
-    transform: scale(1.1);
-}
-
-/* アイコンのコンテナ */
-.icon-container {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
-
-
 .right-end {
     margin: 0 25px 0 10px;
 }
 
-.clear-icon:hover {
-    color: #f0f0f0;
-}
-
-/* 画像表示部分 */
+/* -------------------ビューア------------------- */
 .viewer {
     display: flex;
     justify-content: center;
@@ -210,6 +211,8 @@ span#imageCounter {
     border-radius: 3px;
 }
 
+/* -------------------初期画面------------------- */
+
 #initialContainer {
     position: absolute;
     top: 50%;
@@ -237,7 +240,7 @@ span#imageCounter {
     text-align: left;
 }
 
-/* フルスクリーン表示用 */
+/* -------------------フルスクリーン表示------------------- */
 #fullscreenContainer {
     position: fixed;
     top: 0;
@@ -250,14 +253,6 @@ span#imageCounter {
     align-items: center;
     z-index: 1000;
     cursor: pointer;
-}
-
-#settingsModal.hidden,
-#fileDropdown.hidden,
-#fullscreenContainer.hidden,
-#mainUiContainer.hidden,
-#initialContainer.hidden {
-    display: none;
 }
 
 #fullscreenImage {
@@ -284,7 +279,7 @@ span#imageCounter {
     background: rgba(0, 0, 0, 0.5);
 }
 
-/* モーダルウィンドウ */
+/* -------------------モーダルウィンドウ------------------- */
 .modal {
     position: fixed;
     z-index: 1000;
@@ -311,4 +306,9 @@ span#imageCounter {
     float: right;
     font-size: 24px;
     cursor: pointer;
+}
+
+.attention {
+    color: red;
+    font-size: 14px;
 }
